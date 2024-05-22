@@ -47,7 +47,7 @@ public class CustomerResource {
                 customerPatchRequest.name);
         if(replaced == null)
             return Response.status(Response.Status.EXPECTATION_FAILED)
-                    .entity(Map.of("error", "unable to update or create customer"))
+                    .entity(Map.of("error", "unable to update customer"))
                     .build();
         return Response.ok(Company.getCompany().getCustomerByID(id)).build();
     }
