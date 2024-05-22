@@ -32,14 +32,14 @@ public class Company {
 
     public Customer getCustomerByID(long id){
         if(id<0) throw new IllegalArgumentException("Cannot use negative identifiers");
-        return allCustomers.stream().filter(customer -> id==customer.getId()).findFirst().orElse(null);
+        return allCustomers.stream().filter(customer -> id==customer.getId()).peek(System.out::println).findFirst().orElse(null);
     }
 
     public Customer updateCustomer(long id, String name){
-        Customer found = getCustomerByID(id);
+        Customer found = getCustomerByID((int)id);
         if(found!=null)
             found.setName(name);
-        return getCustomerByID(id);
+        return getCustomerByID((int)id);
     }
 
     public Customer updateCustomer(long id, String name, String zipcode, String city, LocalDate dateofbirth) {
