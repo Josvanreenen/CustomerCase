@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <title>Customer maintenance portal</title>
+</head>
+<body>
+    <!-- CSS grid to layout the page, having a header, a main content area and a footer -->
+    <div style="display: grid; grid-template-rows: auto 1fr auto; height: 100vh;">
+        <header style="background-color: #f0f0f0; padding: 1em;">
+            <h2>Customer maintenance portal</h2>
+        </header>
+        <main style="padding: 1em;">
+            <!-- insert 2 columns, one for navigation and one for content -->
+            <div style="display: grid; grid-template-columns: 200px 1fr; gap: 1em;">
+                <nav>
+                    <h3>Navigation</h3>
+                    <ul>
+                        <li><a href="#">Customers</a></li>
+                        <li><a href="#">Orders</a></li>
+                    </ul>
+                </nav>
+                <div id="result-container">
+                    <h3>Content</h3>
+                    <p>
+                        Welcome to the customer maintenance portal. This portal allows you to maintain customers and orders.
+                    </p>
+                    <p>
+                        Several forms to allow Customer manipulation:
+                    </p>
+                    <form id="PUTcustomerForm">
+                        <label for="putid">Customer id:<input type="number" id="putid" name="id" /> </label>
+                        <label for="putname">Customer name:<input type="text" id="putname" name="name" /> </label>
+                        <label for="putzipcode">Customer zipcode:<input type="text" id="putzipcode" name="zipcode" /> </label>
+                        <label for="putcity">Customer city:<input type="text" id="putcity" name="city" /> </label>
+                        <label for="putdateofbirth">Customer date of birth:<input type="date" id="putdateofbirth" name="dateofbirth" /> </label>
+                        <input type="button" id="put" value="Put it all!" />
+                    </form>
+
+                    <form id="PATCHcustomerForm">
+                        <label for="patchid">Customer id:<input type="number" id="patchid" name="id" /> </label>
+                        <label for="patchname">Customer name:<input type="text" id="patchname" name="name" /> </label>
+                        <input type="button" id="patch" value="Patch it all!" />
+                    </form>
+
+                    <form id="DELETEcustomerForm">
+                        <label for="deleteid">Customer id:<input type="number" id="deleteid" name="id" /> </label>
+                        <input type="button" id="delete" value="Delete it!" />
+                    </form>
+                </div>
+            </div>
+        </main>
+        <footer style="background-color: #f0f0f0; padding: 1em;">
+            <p>
+                &copy; 2024 Customer maintenance portal
+            </p>
+        </footer>
+        <script language="JavaScript">
+            function putform(){
+                //convert form to json
+                let formdata = new FormData(document.querySelector("#PUTcustomerForm"));
+                let jsonRequestBody = {};
+                formdata.forEach((value, key) => jsonRequestBody[key] = value); //mind the order here
+
+                //prepare fetchoptions
+                let fetchoptions = {
+                    method: "PUT",
+                    body: JSON.stringify(jsonRequestBody),
+                    headers: {'Content-Type': 'application/json'}
+                }
+
+                //actually fetch & handle results once they return
+                fetch("restservices/customer/"+jsonRequestBody['id'], fetchoptions)
+                    .then(response => response.json())
+                    .then(function(myJson){
+                       console.log(myJson) //
+                    });
+            }
+
+            function patchform(){
+                //convert form to json
+                let formData = new FormData(document.querySelector("#PATCHcustomerForm"));
+                let jsonRequestBody = {
+                    "name": formData.get("name") //no need to do a key value loop
+                }
+                //prepare fetchoptions
+                let fetchoptions = {
+                    method: "PATCH",
+                    body: JSON.stringify(jsonRequestBody),
+                    headers: {'Content-Type': 'application/json'}
+                }
+
+                //actually fetch & handle results once they return
+                fetch("restservices/customer/"+formData.get("id"), fetchoptions)
+                    .then(response => response.json())
+                    .then(function (myJson){
+                        console.log(myJson)
+                    })
+            }
+
+            function deleteform(){
+                //convert form to json ?
+                let formData = new FormData(document.querySelector("#DELETEcustomerForm"));
+
+                //prepare fetchoptions
+                let fetchoptions = {
+                    method: "DELETE"
+                    //no body
+                    //no special headers
+                }
+
+                //actually fetch & handle results once they return
+                fetch("restservices/customer/"+formData.get("id"), fetchoptions)
+                    .then(function (response){
+                        if (response.ok) console.log("Customer deleted")
+                        else if (response.status == 404) console.log("Customer not found")
+                        else console.log("Something else happened")
+                    })
+            }
+
+            //vergeet deze niet
+            document.querySelector("#put").addEventListener("click", putform);
+            document.querySelector("#patch").addEventListener("click", patchform);
+            document.querySelector("#delete").addEventListener("click", deleteform);
+
+        </script>
+    </div>
+</body>
+
+</html>
