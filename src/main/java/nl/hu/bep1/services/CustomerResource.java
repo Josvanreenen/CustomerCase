@@ -26,7 +26,7 @@ public class CustomerResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response putCustomer(@PathParam("customerid") long id, CustomerRequest customerRequest){
         Customer replaced = Company.getCompany().updateCustomer(
-                customerRequest.id,
+                id,
                 customerRequest.name,
                 customerRequest.zipcode,
                 customerRequest.city,
@@ -35,7 +35,7 @@ public class CustomerResource {
             return Response.status(Response.Status.EXPECTATION_FAILED)
                     .entity(Map.of("error", "unable to update or create customer"))
                     .build();
-        return Response.ok(Company.getCompany().getCustomerByID(customerRequest.id)).build();
+        return Response.ok(Company.getCompany().getCustomerByID(id)).build();
     }
     @PATCH
     @Path("{customerid}")

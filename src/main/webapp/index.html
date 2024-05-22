@@ -28,7 +28,7 @@
                         Several forms to allow Customer manipulation:
                     </p>
                     <form id="PUTcustomerForm">
-                        <label for="putid">Customer id:<input type="number" id="putid" name="id" /> </label>
+                        <label for="putid">Customer id:<input type="number" id="putid"/> </label>
                         <label for="putname">Customer name:<input type="text" id="putname" name="name" /> </label>
                         <label for="putzipcode">Customer zipcode:<input type="text" id="putzipcode" name="zipcode" /> </label>
                         <label for="putcity">Customer city:<input type="text" id="putcity" name="city" /> </label>
@@ -69,7 +69,7 @@
                 }
 
                 //actually fetch & handle results once they return
-                fetch("restservices/customer/"+jsonRequestBody['id'], fetchoptions)
+                fetch("restservices/customer/"+document.querySelector("#putid").value, fetchoptions)
                     .then(response => response.json())
                     .then(function(myJson){
                        console.log(myJson) //

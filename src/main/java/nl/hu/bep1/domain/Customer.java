@@ -43,4 +43,15 @@ public class Customer {
             throw new IllegalArgumentException("name cannot be blank");
         this.name=name;
     }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", zipcode='" + zipcode + '\'' +
+                ", city='" + city + '\'' +
+                ", dateOfBirth=" + dateOfBirth +
+                '}';
+    }
 }

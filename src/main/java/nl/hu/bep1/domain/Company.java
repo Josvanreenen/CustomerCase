@@ -21,6 +21,7 @@ public class Company {
     public boolean addCustomer(Customer toAdd){
         if(!allCustomers.contains(toAdd)){
             toAdd.setId(allCustomers.size());
+            System.out.println(toAdd);
             return allCustomers.add(toAdd);
 
         }

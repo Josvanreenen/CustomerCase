@@ -7,6 +7,6 @@ import javax.ws.rs.ApplicationPath;
 @ApplicationPath("restservices")
 public class JerseyConfig extends ResourceConfig {
     public JerseyConfig() {
-        register("nl.hu.bep1.services");
+        packages("nl.hu.bep1.services");
     }
 }
